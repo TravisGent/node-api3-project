@@ -2,8 +2,17 @@ const express = require('express');
 
 const router = express.Router();
 
+const db = require("./postDb.js");
+
 router.get('/', (req, res) => {
-  // do your magic!
+  db.get()
+    .then(posts => {
+      res.status(200).json({ data: posts})
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ errorMessage: "We could not get the data" });
+    });
 });
 
 router.get('/:id', (req, res) => {
